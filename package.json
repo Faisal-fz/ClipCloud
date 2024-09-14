@@ -1,7 +1,7 @@
 {
-  "name": "flowtube",
+  "name": "clipcloud",
   "version": "1.0.0",
-  "description": "backend of FlowTube",
+  "description": "video stramer",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
