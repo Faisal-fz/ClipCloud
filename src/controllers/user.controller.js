@@ -87,7 +87,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
     const {email, username, password} = req.body;
 
-    if(!username || !email){
+    if(!(username ||email)){
         throw new ApiError(400, "All fields are required");
     }
     const user =await User.findOne({
@@ -108,6 +108,8 @@ const loginUser = asyncHandler(async (req, res) => {
 
     const {accessToken, refreshToken} = await generateAccessAndRefereshTokens(user._id);
 
+    const loggedInUser = await User.findById(user._id).select("-password -refreshToken");
+
     const options ={
         httpOnly: true,
         secure: true
@@ -121,9 +123,7 @@ const loginUser = asyncHandler(async (req, res) => {
         new ApiResponse(
             200,
             {
-                user:loggedInUser,
-                accessToken,
-                refreshToken
+                user: loggedInUser, accessToken, refreshToken
             },
             "User logged in successfully"
         )
@@ -151,7 +151,7 @@ const logoutUser = asyncHandler(async (req, res) => {
     .status(200)
     .cookie("accessToken", options)
     .cookie("refreshToken", options)
-    .json(new ApiResponse(200, {}, "User logged Out"))
+    .json(new ApiResponse(200,"User logged Out"))
 })
 export {
     registerUser,
