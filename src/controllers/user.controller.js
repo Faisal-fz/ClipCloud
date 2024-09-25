@@ -205,7 +205,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 const changeCurrentPassword = asyncHandler(async (req, res) => {
     const {oldPassword , newPassword} = req.body;
     const user = await User.findById(req.user?._id);
-    const isPasswordCorrect = await User.isPasswordCorrect(oldPassword);
+    const isPasswordCorrect = await user.isPasswordCorrect(oldPassword);
     if(!isPasswordCorrect){
         throw new ApiError (400, "invalid old Password")
     }
@@ -225,6 +225,7 @@ const getCurrentUser = asyncHandler(async(req,res)=>{
 }) 
 
 const updateAccountDetails = asyncHandler(async(req,res)=>{
+    console.log("Request Body:", req.body);
     const {username , email} = req.body;
     if(!username || !email){
         throw new ApiError(400 , "All feilds are required")
