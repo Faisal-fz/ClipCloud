@@ -6,7 +6,7 @@ import {ApiError} from "../utils/ApiError.js"
 import { asyncHandler } from "../utils/asyncHandler.js";
 
 //create tweet
-export const createTweet = asyncHandler(async(req, res, next) => {
+ const createTweet = asyncHandler(async(req, res, next) => {
     const {content} = req.body;
     if(!content){
         throw new ApiError(400, "content required")
@@ -117,3 +117,10 @@ const deleteTweet = asyncHandler(async(req,res)=>{
     return res.status(201).json(
     new ApiResponse(200, deletedTweet, "tweet deleted successfully!!"))
 })
+
+export{
+    createTweet,
+    getUserTweets,
+    updateTweet,
+    deleteTweet
+}
